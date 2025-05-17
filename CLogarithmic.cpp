@@ -53,7 +53,7 @@ bool Logarithmic::operator==(const Logarithmic& x){
 double Logarithmic::GetValue(double in) {
     if (in <= 0.0) {
         ErrorMessage("GetValue: il logaritmo non è definito per x ≤ 0.");
-        exit(-1);
+        return 0.0;;
     }
 
     return k_coeff * (log(in) / log(b_coeff)); // log_b(x) = ln(in) / ln(b)

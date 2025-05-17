@@ -12,7 +12,7 @@
 
 // funzione che stampa il risultato di GetValue degli oggetti
 void ShowValue(const char *str, double x, double ris){
-    cout << "GetValue del " << str << ": se x = " << x << ", f(x) vale: " << ris << endl;
+    cout << "GetValue del " << str << ": se x = " << x << ", f(x) = " << ris << endl;
 }
 
 int main() {

@@ -9,8 +9,7 @@
 
 /// @brief default constructor
 Polynomial::Polynomial() {
-    degree = -1;
-    coeff = NULL;
+    Reset();
 }
 
 /// @brief parameter constructor
@@ -22,20 +21,12 @@ Polynomial::Polynomial(const double* coefficients, int size) {
 
 /// @brief destructor
 Polynomial::~Polynomial() {
-    if (coeff != NULL) {
-        delete[] coeff;
-        coeff = NULL;
-    }
+    Reset();
 }
-
 
 /// @brief copy constructor
 /// @param p oggetto della classe polinomio da copiare 
 Polynomial::Polynomial(const Polynomial& p) {
-    if (p.coeff == NULL) {
-        ErrorMessage("Copy constructor: the object to be copied has no coefficients");
-        exit(-1);
-    }
     SetPolynomial(p.coeff, (p.degree +1));
 }
 
@@ -43,9 +34,7 @@ Polynomial::Polynomial(const Polynomial& p) {
 /// @param p oggetto della classe polinomio  
 Polynomial& Polynomial::operator=(const Polynomial& p) {
     if (this != &p) {
-        if (coeff != NULL)
-            delete[] coeff;
-
+        Reset();
         SetPolynomial(p.coeff, (p.degree +1));
     }
     return *this;
@@ -73,6 +62,11 @@ void Polynomial::SetPolynomial(const double* coefficients, int size) {
         return;
     }
 
+    if (coefficients == NULL) {
+        ErrorMessage("SetPolynomial: input coefficients pointer is null");
+        return;
+    }
+
     if (coeff != NULL)
         Reset();
 
@@ -85,6 +79,11 @@ void Polynomial::SetPolynomial(const double* coefficients, int size) {
 /// @brief funzione che prende come parametro un valore x e calcola f(x) 
 /// @param in parametro da sostituire a x
 double Polynomial::GetValue(double in)  {
+    if (coeff == NULL || degree < 0) {
+        ErrorMessage("GetValue: Polynomial is not initialized");
+        return 0.0;
+    }
+
     double x = in;
     double result = coeff[0];
 
@@ -130,4 +129,3 @@ void Polynomial::Dump()  {
     }
     cout << endl;
 }
-
