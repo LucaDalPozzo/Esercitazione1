@@ -5,25 +5,43 @@
 	Details.
 */ 
 
-#ifndef LOGARITHMIC_H
-#define LOGARITHMIC_H
+#ifndef CLOGARITHMIC_H
+#define CLOGARITHMIC_H
 
-#include "CPolynomial.h"
+#include "CFunction.h"  
 
-class Logarithmic : public Polynomial{
-	double k_coeff;
-    double b_coeff;
-	
+///@class Logarithmic
+///@brief Classe per rappresentare logaritmi
+class Logarithmic : public Function {
+private:
+    double b_coeff;  // base del logaritmo
+    double k_coeff;  // coefficiente moltiplicativo
+
 public:
-    
+    /// @name CONSTRUCTORS/DESTRUCTOR
+	/// @{
     Logarithmic();
-    Logarithmic(double k_coeff, double b_coeff);
-    Logarithmic(const Logarithmic& x);
+    Logarithmic(double k, double b);
+    Logarithmic(const Logarithmic& l);
     ~Logarithmic();
+    /// @}
 
+    /// @name OPERATORS
+	/// @{
+    Logarithmic& operator =(const Logarithmic& x);
+    bool operator==(const Logarithmic& p);
+    /// @}
+
+    /// @name GETVALUE AND DUMP
+	/// @{
     double GetValue(double in);
     void Dump();
-    
+    /// @}
+
+    /// @name BASIC HANDLING
+	/// @{
+    void SetCoefficients(double k, double b);
+    /// @}
 };
 
 #endif

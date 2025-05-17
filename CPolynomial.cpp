@@ -7,16 +7,20 @@
 
 #include "CPolynomial.h"
 
+/// @brief default constructor
 Polynomial::Polynomial() {
     degree = -1;
     coeff = NULL;
 }
 
+/// @brief parameter constructor
+/// @param coefficients coefficenti del polinomio
+/// @param size dimensione del polinomio
 Polynomial::Polynomial(const double* coefficients, int size) {
-    coeff = NULL;
     SetPolynomial(coefficients, size);
 }
 
+/// @brief destructor
 Polynomial::~Polynomial() {
     if (coeff != NULL) {
         delete[] coeff;
@@ -24,31 +28,31 @@ Polynomial::~Polynomial() {
     }
 }
 
+
+/// @brief copy constructor
+/// @param p oggetto della classe polinomio da copiare 
 Polynomial::Polynomial(const Polynomial& p) {
     if (p.coeff == NULL) {
         ErrorMessage("Copy constructor: the object to be copied has no coefficients");
         exit(-1);
     }
-
-    degree = p.degree;
-    coeff = new double[degree + 1];
-    for (int i = 0; i <= degree; ++i)
-        coeff[i] = p.coeff[i];
+    SetPolynomial(p.coeff, (p.degree +1));
 }
 
+/// @brief operator=
+/// @param p oggetto della classe polinomio  
 Polynomial& Polynomial::operator=(const Polynomial& p) {
     if (this != &p) {
         if (coeff != NULL)
             delete[] coeff;
 
-        degree = p.degree;
-        coeff = new double[degree + 1];
-        for (int i = 0; i <= degree; ++i)
-            coeff[i] = p.coeff[i];
+        SetPolynomial(p.coeff, (p.degree +1));
     }
     return *this;
 }
 
+/// @brief operator==
+/// @param p oggetto della classe polinomio  
 bool Polynomial::operator==(const Polynomial& p) {
     if (degree != p.degree)
         return false;
@@ -60,10 +64,13 @@ bool Polynomial::operator==(const Polynomial& p) {
     return true;
 }
 
+/// @brief funzione che inserisce i valori del polinomio
+/// @param coefficients coefficenti del polinomio
+/// @param size dimensione del polinomio  
 void Polynomial::SetPolynomial(const double* coefficients, int size) {
     if (size < 1) {
         ErrorMessage("SetPolynomial: the degree of the Polynomial cannot be negative");
-        exit(-1);
+        return;
     }
 
     if (coeff != NULL)
@@ -75,6 +82,8 @@ void Polynomial::SetPolynomial(const double* coefficients, int size) {
         coeff[i] = coefficients[i];
 }
 
+/// @brief funzione che prende come parametro un valore x e calcola f(x) 
+/// @param in parametro da sostituire a x
 double Polynomial::GetValue(double in)  {
     double x = in;
     double result = coeff[0];
@@ -87,6 +96,7 @@ double Polynomial::GetValue(double in)  {
     return result;
 }
 
+/// @brief funzione che azzera il polinomio, porta a zero i valori 
 void Polynomial::Reset() {
     degree = -1;
     if (coeff != NULL) {
@@ -95,14 +105,7 @@ void Polynomial::Reset() {
     }
 }
 
-void Polynomial::ErrorMessage(const char* string)  {
-    cout << endl << "ERROR -- Polynomial -- " << string << endl;
-}
-
-void Polynomial::WarningMessage(const char* string)  {
-    cout << endl << "WARNING -- Polynomial -- " << string << endl;
-}
-
+/// @brief funzione che mostra il polinomio
 void Polynomial::Dump()  {
     if (degree == -1) {
         cout << "Uninitialized polynomial" << endl;

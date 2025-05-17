@@ -7,10 +7,14 @@
 
 #include "CFunction.h"
 
+/// @brief constructor 
 Function::Function(){};
 
+/// @brief destructor
 Function::~Function(){};
 
-double Function::GetValue(double in){};
-
-void Function::Dump(){};
+/// @brief Error message 
+/// @param string messaggio di errrore
+void Function::ErrorMessage(const char* string)  {
+    cout << endl << "ERROR " << string << endl;
+}

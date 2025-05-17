@@ -2,7 +2,9 @@
 	@brief A virtual base class for functions of a single variable
 	@author Luca Dal Pozzo
 
-	Details.
+	La classe Function è una classe base astratta per rappresentare funzioni matematiche generiche.
+ 	Ogni funzione derivata deve implementare il metodo GetValue() per calcolare il valore della funzione
+ 	per un dato input. Inoltre, le funzioni devono implementare Dump() per stampare una rappresentazione della funzione.
 */ 
 
 #ifndef FUNCTION_H
@@ -14,8 +16,9 @@
 
 using namespace std;
 
+///@class Function
+///@brief Classe astratta per rappresentare funzioni matematiche generiche. 
 class Function {
-	
 		
 public:
     
@@ -35,7 +38,10 @@ public:
 	virtual void Dump()=0;
 	/// @}
 
-    
+	/// @name ERROR MESSAGE 
+	/// @{
+	void ErrorMessage(const char* string);
+	/// @}
 };
 
 #endif
